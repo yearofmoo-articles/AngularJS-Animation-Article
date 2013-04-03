@@ -6,12 +6,26 @@
 
   <div ng-hide="hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
     <input type="search" ng-model="q" ng-change="filter(q)" placeholder="filter results..." />
-    <a href="" ng-click="search('all')">+ All Days</a>
-    <a href="" ng-click="search('even')">+ Even Days</a>
-    <a href="" ng-click="search('odd')">+ Odd Days</a>
-    <a href="" ng-click="search('weekends')">+ Weekends</a>
-    <a href="" ng-click="search('weekdays')">+ Weekdays</a>
-    <a href="" ng-click="search('')">No Results</a>
+    <ul class="nav nav-pills pull-right">
+      <li ng-class="{active:q=='all'}">
+        <a href="" ng-click="search('all')">+ All Days</a>
+      </li>
+      <li ng-class="{active:q=='even'}">
+        <a href="" ng-click="search('even')">+ Even Days</a>
+      </li>
+      <li ng-class="{active:q=='odd'}">
+        <a href="" ng-click="search('odd')">+ Odd Days</a>
+      </li>
+      <li ng-class="{active:q=='weekends'}">
+        <a href="" ng-click="search('weekends')">+ Weekends</a>
+      </li>
+      <li ng-class="{active:q=='weekdays'}">
+        <a href="" ng-click="search('weekdays')">+ Weekdays</a>
+      </li>
+      <li ng-class="{active:q==false}">
+        <a href="" ng-click="search('')">No Results</a>
+      </li>
+    </ul>
     <table class="calendar">
       <tr>
         <th><a href="" ng-click="search('Sunday')">Sunday</a></th>

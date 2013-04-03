@@ -15,6 +15,7 @@ angular.module('App', [])
       $scope.tweets = filter(cache, q);
     };
     $scope.search = function(q) {
+      $scope.s = q;
       if(q == false) {
         $scope.tweets = [];
       }

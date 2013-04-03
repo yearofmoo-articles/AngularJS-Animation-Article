@@ -5,13 +5,29 @@
   </h2>
   <div ng-hide="hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
     <input type="search" ng-model="q" ng-change="filter(q)" placeholder="filter results..." />
-    <a href="" ng-click="search('angularjs')">+ AngularJS</a>
-    <a href="" ng-click="search('javascript')">+ JavaScript</a>
-    <a href="" ng-click="search('MVC')">+ MVC</a>
-    <a href="" ng-click="search('Apps')">+ Apps</a>
-    <a href="" ng-click="search('Animations')">+ Animations</a>
-    <a href="" ng-click="search('Programming')">+ Programming</a>
-    <a href="" ng-click="search(false)">No Results</a>
+    <ul class="nav nav-pills pull-right">
+      <li ng-class="{active:s=='angularjs'}">
+        <a href="" ng-click="search('angularjs')">+ AngularJS</a>
+      </li>
+      <li ng-class="{active:s=='javascript'}">
+        <a href="" ng-click="search('javascript')">+ JavaScript</a>
+      </li>
+      <li ng-class="{active:s=='MVC'}">
+        <a href="" ng-click="search('MVC')">+ MVC</a>
+      </li>
+      <li ng-class="{active:s=='Apps'}">
+        <a href="" ng-click="search('Apps')">+ Apps</a>
+      </li>
+      <li ng-class="{active:s=='Animations'}">
+        <a href="" ng-click="search('Animations')">+ Animations</a>
+      </li>
+      <li ng-class="{active:s=='Programming'}">
+        <a href="" ng-click="search('Programming')">+ Programming</a>
+      </li>
+      <li ng-class="{active:s==false}">
+        <a href="" ng-click="search(false)">No Results</a>
+      </li>
+    </ul>
     <div class="tweet-records">
       <div class="no-tweets" data-ng-hide="tweets.length > 0" ng-animate="{show: 'repeat-show', hide: 'repeat-hide'}">
         No Results
