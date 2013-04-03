@@ -38,9 +38,7 @@
         <div class="inner">
           <a href="" ng-click="filter(tweet.id_str)">
             <img ng-src="{{ tweet.profile_image_url }}" />
-            <p>
-              {{ tweet.text }} 
-            </p>
+            <p data-ng-bind-html-unsafe="tweet.text"></p>
           </a>
         </div>
       </div>

@@ -7,12 +7,14 @@ npm install http-server
 http-server -p 8000 app/
 ```
 
-You can then access the website via (remember the trailing slash):
+You can then access the website via:
 
-http://localhost:8000/app/
+http://localhost:8000/
 
 
 # Blog Article
+
+This article will teach you everything you need to know:
 
 http://www.yearofmoo.com/2013/04/animation-in-angularjs.html
 
