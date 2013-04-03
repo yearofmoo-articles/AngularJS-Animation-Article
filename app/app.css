@@ -1,0 +1,396 @@
+h1 {
+  font-size:40px;
+}
+
+h2 {
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+#wrapper {
+  padding-top:60px;
+}
+
+.app-youtube-listing {
+  padding:25px;
+  box-shadow:0 0 5px #aaa;
+  position:relative;
+  margin-top:0;
+  margin-bottom:0px;
+  border-bottom:1px solid #ddd;
+  background:#eee;
+  overflow:auto;
+  -webkit-transition:all 0.25s ease-out;
+  -moz-transition:all 0.25s ease-out;
+  -ms-transition:all 0.25s ease-out;
+  -o-transition:all 0.25s ease-out;
+  transition:all 0.25s ease-out;
+}
+
+.app-youtube-listing:hover {
+  margin-top:20px;
+  margin-bottom:20px;
+  box-shadow:0 0 10px #555;
+  -webkit-transform:scale(1.01);
+  -moz-transform:scale(1.01);
+  -ms-transform:scale(1.01);
+  -o-transform:scale(1.01);
+  transform:scale(1.01);
+}
+
+.app-youtube-listing + .app-youtube-listing {
+  margin-top:20px;
+}
+
+.app-youtube-listing:hover {
+  background:white;
+  cursor:pointer;
+  box-shadow:0 0 10px silver;
+}
+
+.app-youtube-listing-image {
+  float:left;
+  margin-right:20px;
+}
+
+.app-youtube-listing-thumbnails > .app-youtube-listing-thumbnail {
+  margin:5px;
+}
+
+.app-youtube-listing-thumbnail {
+  border:2px solid #aaa;
+}
+
+.app-youtube-searcher {
+  float:right;
+}
+
+.app-loading-container {
+  float:left;
+  margin-right:20px;
+  width:25px;
+  height:25px;
+}
+
+.app-loading-animation {
+  -webkit-transition:all 0.25s linear;
+  background:url(./lib/spinner.gif) center center no-repeat;
+  width:25px;
+  height:25px;
+  display:block;
+}
+
+.app-loading-animation.ready {
+  opacity:0;
+}
+
+.app-loading-animation,
+.app-loading-animation.loading {
+  opacity:1;
+}
+
+.app-youtube-profile {
+  text-align:center;
+  padding:20px;
+}
+
+.app-youtube-listing-imagery {
+  overflow:auto;
+  margin-bottom:20px;
+}
+
+.app-youtube-star .icon-star {
+  font-size:50px;
+  color:gold;
+  text-shadow: 0 0 30px white;
+}
+
+.app-youtube-profile-header {
+  text-align:left;
+  position:relative;
+  margin-bottom:30px;
+}
+
+.app-youtube-profile-header .app-youtube-stars {
+  float:right;
+  margin-left:20px;
+  margin-bottom:20px;
+}
+
+.app-youtube-related {
+  margin-top:40px;
+  text-align:left;
+}
+
+.app-youtube-listing .app-youtube-stars {
+  position:absolute;
+  right:20px;
+  bottom:20px;
+}
+
+#footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:black;
+  padding:1em;
+  box-shadow:0 -5px 20px #555;
+}
+#footer a {
+  color:silver;
+  text-decoration:none;
+}
+#footer .cloud-link {
+  float:right;
+}
+
+.tweet-record img {
+  float:left;
+  margin-right:10px;
+}
+
+.tweet-record {
+  clear:both;
+}
+
+.tweet-record.repeat-enter-setup {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+  opacity:0;
+  height:0;
+  position:relative;
+}
+
+.repeat-enter-setup.repeat-enter-start {
+  opacity:1;
+  height:50px;
+}
+
+.repeat-leave-setup {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+  opacity:1;
+  position:relative;
+  height:50px;
+  left:0;
+}
+
+.repeat-leave-setup.repeat-leave-start {
+  opacity:0;
+  height:0;
+}
+
+.tweet-record {
+  position:relative;
+  height:50px;
+  overflow:hidden;
+}
+
+.tweet-record .inner {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0
+  bottom:0;
+}
+
+.repeat-show-setup,
+.repeat-hide-setup {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.repeat-show-setup {
+  opacity:0;
+  top:-30px;
+}
+.repeat-show-start {
+  opacity:1;
+  top:0;
+}
+
+.repeat-hide-setup {
+  opacity:1;
+  top:0;
+}
+.repeat-hide-start {
+  opacity:0;
+  top:-30px;
+}
+
+.tweet-records {
+  position:relative;
+  min-height:100px;
+}
+
+.no-tweets {
+  background:rgba(255,255,255,0.5);
+  padding:5px;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  border:1px solid #aaa;
+  position:absolute;
+}
+
+.calendar {
+  width:100%;
+}
+
+.calendar .cell {
+  width:12%;
+  text-align:right;
+  padding:10px;
+  height:100px;
+  border:1px solid #ddd;
+}
+
+.calendar .cell.outer {
+  background:#f5f5f5;
+}
+
+.calendar-active {
+  font-size:2em;
+  text-align:center;
+  line-height:80px;
+}
+
+.fade-hide-setup, .fade-show-setup,
+.calendar-hide-setup, .calendar-show-setup {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.fade-hide-setup,
+.calendar-hide-setup {
+  opacity:1;
+}
+.fade-hide-setup.fade-hide-start,
+.calendar-hide-setup.calendar-hide-start {
+  opacity:0;
+}
+
+.fade-show-setup,
+.calendar-show-setup {
+  opacity:0;
+}
+.fade-show-setup.fade-show-start,
+.calendar-show-setup.calendar-show-start {
+  opacity:1;
+}
+
+#ng-view {
+  position:relative;
+  min-height:500px;
+}
+
+.view-enter-setup, .view-leave-setup, .slide-enter-setup, .slide-leave-setup, .wave-enter-setup, .wave-leave-setup {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.view-enter-setup {
+  opacity:0;
+  left:100px;
+  width:100%;
+  position:absolute;
+}
+.view-enter-setup.view-enter-start {
+  left:0;
+  opacity:1;
+}
+
+.view-leave-setup {
+  position:absolute;
+  left:0;
+  width:100%;
+  opacity:1;
+}
+.view-leave-setup.view-leave-start {
+  left:-100px;
+  opacity:0;
+}
+
+.active-cell-frame {
+  background:#ddd;
+  border-radius:20px;
+}
+
+.slide-frame {
+  position:relative;
+  height:200px;
+  overflow:hidden;
+}
+
+.slide-frame > div {
+  width:100%;
+}
+
+.slide-enter-setup {
+  position:absolute;
+  left:0;
+  top:-100px;
+}
+
+.slide-enter-start {
+  top:0;
+}
+
+.slide-leave-setup {
+  position:absolute;
+  top:0;
+}
+
+.slide-leave-start {
+  top:200px;
+}
+
+.wave-enter-setup {
+  position:absolute;
+  left:100%;
+}
+
+.wave-enter-start {
+  left:0;
+}
+
+.wave-leave-setup {
+  position:absolute;
+  left:0;
+}
+
+.wave-leave-start {
+  left:-100%;
+}
+
+.animation-actions > a {
+  float:left;
+  margin-left:1em;
+}
+
+body.skip-animations * {
+  -webkit-transition:none!important;
+  -moz-transition:none!important;
+  -ms-transition:none!important;
+  -o-transition:none!important;
+  transition:none!important;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html> 
+<html data-ng-app="App" data-ng-controller="AppCtrl">
+  <head>
+    <title>AngularJS Testing Demo</title>
+    <link rel="stylesheet" type="text/css" href="./lib/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+  </head>
+
+  <body ng-class="{'skip-animations':disabled}" class="ng-cloak">
+    <div id="wrapper">
+      <nav class="app-navigation">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="navbar-inner">
+            <div class="container">
+              <a class="brand" href="#">
+                AngularJS Animations Demo
+              </a>
+
+              <ol class="nav">
+                <li>
+                  <a href="#/ng-repeat">ngRepeat</a>
+                </li>
+                <li>
+                  <a href="#/ng-show-hide">ngShow / ngHide</a>
+                </li>
+                <li>
+                  <a href="#/ng-switch">ngSwitch / ngInclude</a>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="container">
+        <div data-ng-view id="ng-view" ng-animate="{enter: 'view-enter'}"></div>
+      </div>
+    </div>
+    <footer id="footer">
+      <a href="#" target="_blank" class="github-link"><span class="icon-github"></span> View Github Repo</a>
+    </footer>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="./lib/angular.min.js"></script> 
+    <script src="./app.js"></script> 
+  <body>
+</html>

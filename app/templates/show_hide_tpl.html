@@ -1,0 +1,37 @@
+<div>
+  <h2>
+    ngShow / ngHide Animations
+    <div class="pull-right" ng-include="'./templates/actions_tpl.html'"></div>
+  </h2>
+
+  <div ng-hide="hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+    <input type="search" ng-model="q" ng-change="filter(q)" placeholder="filter results..." />
+    <a href="" ng-click="search('all')">+ All Days</a>
+    <a href="" ng-click="search('even')">+ Even Days</a>
+    <a href="" ng-click="search('odd')">+ Odd Days</a>
+    <a href="" ng-click="search('weekends')">+ Weekends</a>
+    <a href="" ng-click="search('weekdays')">+ Weekdays</a>
+    <a href="" ng-click="search('')">No Results</a>
+    <table class="calendar">
+      <tr>
+        <th><a href="" ng-click="search('Sunday')">Sunday</a></th>
+        <th><a href="" ng-click="search('Monday')">Monday<a></th>
+        <th><a href="" ng-click="search('Tuesday')">Tuesday</a></th>
+        <th><a href="" ng-click="search('Wednesday')">Wednesday</a></th>
+        <th><a href="" ng-click="search('Thursday')">Thursday</a></th>
+        <th><a href="" ng-click="search('Friday')">Friday</a></th>
+        <th><a href="" ng-click="search('Saturday')">Saturday</a></th>
+      </tr>
+      <tr ng-repeat="row in rows">
+        <td ng-repeat="cell in row.cells" ng-class="cell.type" class="cell" ng-click="search(cell.index)">
+          {{ cell.number }}
+          <div ng-show="isActive(cell)" class="calendar-active" ng-animate="{show: 'calendar-show', hide: 'calendar-hide'}">
+            <div class="active-cell-frame">
+              <span class="icon-ok"></span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

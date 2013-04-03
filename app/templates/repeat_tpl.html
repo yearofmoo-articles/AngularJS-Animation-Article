@@ -1,0 +1,33 @@
+<div>
+  <h2>
+    ngRepeat Animations
+    <div class="pull-right" ng-include="'./templates/actions_tpl.html'"></div>
+  </h2>
+  <div ng-hide="hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
+    <input type="search" ng-model="q" ng-change="filter(q)" placeholder="filter results..." />
+    <a href="" ng-click="search('angularjs')">+ AngularJS</a>
+    <a href="" ng-click="search('javascript')">+ JavaScript</a>
+    <a href="" ng-click="search('MVC')">+ MVC</a>
+    <a href="" ng-click="search('Apps')">+ Apps</a>
+    <a href="" ng-click="search('Animations')">+ Animations</a>
+    <a href="" ng-click="search('Programming')">+ Programming</a>
+    <a href="" ng-click="search(false)">No Results</a>
+    <div class="tweet-records">
+      <div class="no-tweets" data-ng-hide="tweets.length > 0" ng-animate="{show: 'repeat-show', hide: 'repeat-hide'}">
+        No Results
+      </div>
+      <div class="tweet-record"
+           ng-animate="{enter: 'repeat-enter', leave: 'repeat-leave', move: 'repeat-move'}"
+           ng-repeat="tweet in tweets">
+        <div class="inner">
+          <a href="" ng-click="filter(tweet.id_str)">
+            <img ng-src="{{ tweet.profile_image_url }}" />
+            <p>
+              {{ tweet.text }} 
+            </p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
