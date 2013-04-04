@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.1.4-2845dd1
+ * @license AngularJS v1.1.4
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -1345,7 +1345,7 @@ function setupModuleLoader(window) {
  * - `codeName` – `{string}` – Code name of the release, such as "jiggling-armfat".
  */
 var version = {
-  full: '1.1.4-2845dd1',    // all of these placeholder strings will be replaced by grunt's
+  full: '1.1.4',    // all of these placeholder strings will be replaced by grunt's
   major: 1,    // package task
   minor: 1,
   dot: 4,
@@ -3100,7 +3100,7 @@ function $AnimationProvider($provide) {
  * /&#42;
  *  Keep in mind that you want to combine both CSS
  *  classes together to avoid any CSS-specificity
- *  conflicts 
+ *  conflicts
  * &#42;/
  * .animate-enter-setup.animate-enter-start {
  *  /&#42; The animation code itself &#42;/
@@ -3153,7 +3153,7 @@ function $AnimationProvider($provide) {
  * make sure your animations remember to fire off the done function once the animations are complete.
  *
  * @param {expression} ngAnimate Used to configure the DOM manipulation animations.
- * 
+ *
  */
 
 /**
@@ -3275,7 +3275,7 @@ var $AnimatorProvider = function() {
             beforeFn(element, parent, after);
             if (element.length == 0) return done();
 
-            var memento = (noop || polyfillSetup)(element);
+            var memento = (polyfillSetup || noop)(element);
 
             // $window.setTimeout(beginAnimation, 0); this was causing the element not to animate
             // keep at 1 for animation dom rerender
@@ -3303,7 +3303,6 @@ var $AnimatorProvider = function() {
 
                 $window.setTimeout(done, duration * 1000);
               } else {
-                dump(3)
                 done();
               }
             }
@@ -3319,7 +3318,7 @@ var $AnimatorProvider = function() {
     }
 
     function show(element) {
-      element.css('display', 'block');
+      element.css('display', '');
     }
 
     function hide(element) {
@@ -9017,7 +9016,10 @@ function $SnifferProvider() {
           break;
         }
       }
-      transitions = !!(vendorPrefix + 'Transition' in bodyStyle);
+      transitions = !!('transition' in bodyStyle);
+      if(!transitions) {
+        transitions = !!(vendorPrefix + 'Transition' in bodyStyle);
+      }
     }
 
 
@@ -14234,7 +14236,9 @@ var ngSubmitDirective = ngDirective(function(scope, element, attrs) {
        </select>
        url of the template: <tt>{{template.url}}</tt>
        <hr/>
-       <div ng-include src="template.url"></div>
+       <div class="example-animate-container"
+            ng-include="template.url"
+            ng-animate="{enter: 'example-enter', leave: 'example-leave'}"></div>
      </div>
     </file>
     <file name="script.js">
@@ -14246,10 +14250,45 @@ var ngSubmitDirective = ngDirective(function(scope, element, attrs) {
       }
      </file>
     <file name="template1.html">
-      Content of template1.html
+      <div>Content of template1.html</div>
     </file>
     <file name="template2.html">
-      Content of template2.html
+      <div>Content of template2.html</div>
+    </file>
+    <file name="animations.css">
+      .example-leave-setup,
+      .example-enter-setup {
+        -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+      }
+
+      .example-animate-container > * {
+        display:block;
+        padding:10px;
+      }
+
+      .example-enter-setup {
+        top:-50px;
+      }
+      .example-enter-setup.example-enter-start {
+        top:0;
+      }
+
+      .example-leave-setup {
+        top:0;
+      }
+      .example-leave-setup.example-leave-start {
+        top:50px;
+      }
     </file>
     <file name="scenario.js">
       it('should load template1.html', function() {
@@ -14670,26 +14709,86 @@ var ngPluralizeDirective = ['$locale', '$interpolate', function($locale, $interp
  * @example
  * This example initializes the scope to a list of names and
  * then uses `ngRepeat` to display every person:
-    <doc:example>
-      <doc:source>
-        <div ng-init="friends = [{name:'John', age:25}, {name:'Mary', age:28}]">
-          I have {{friends.length}} friends. They are:
-          <ul>
-            <li ng-repeat="friend in friends">
-              [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
-            </li>
-          </ul>
-        </div>
-      </doc:source>
-      <doc:scenario>
-         it('should check ng-repeat', function() {
-           var r = using('.doc-example-live').repeater('ul li');
-           expect(r.count()).toBe(2);
-           expect(r.row(0)).toEqual(["1","John","25"]);
-           expect(r.row(1)).toEqual(["2","Mary","28"]);
-         });
-      </doc:scenario>
-    </doc:example>
+  <example animations="true">
+    <file name="index.html">
+      <div ng-init="friends = [
+        {name:'John', age:25, gender:'boy'},
+        {name:'Jessie', age:30, gender:'girl'},
+        {name:'Johanna', age:28, gender:'girl'},
+        {name:'Joy', age:15, gender:'girl'},
+        {name:'Mary', age:28, gender:'girl'},
+        {name:'Peter', age:95, gender:'boy'},
+        {name:'Sebastian', age:50, gender:'boy'},
+        {name:'Erika', age:27, gender:'girl'},
+        {name:'Patrick', age:40, gender:'boy'},
+        {name:'Samantha', age:60, gender:'girl'}
+      ]">
+        I have {{friends.length}} friends. They are:
+        <input type="search" ng-model="q" placeholder="filter friends..." />
+        <ul>
+          <li ng-repeat="friend in friends | filter:q"
+              ng-animate="{enter: 'example-repeat-enter',
+                          leave: 'example-repeat-leave',
+                          move: 'example-repeat-move'}">
+            [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
+          </li>
+        </ul>
+      </div>
+    </file>
+    <file name="animations.css">
+      .example-repeat-enter-setup,
+      .example-repeat-leave-setup,
+      .example-repeat-move-setup {
+        -webkit-transition:all linear 0.5s;
+        -moz-transition:all linear 0.5s;
+        -ms-transition:all linear 0.5s;
+        -o-transition:all linear 0.5s;
+        transition:all linear 0.5s;
+      }
+
+      .example-repeat-enter-setup {
+        line-height:0;
+        opacity:0;
+      }
+      .example-repeat-enter-setup.example-repeat-enter-start {
+        line-height:20px;
+        opacity:1;
+      }
+
+      .example-repeat-leave-setup {
+        opacity:1;
+        line-height:20px;
+      }
+      .example-repeat-leave-setup.example-repeat-leave-start {
+        opacity:0;
+        line-height:0;
+      }
+
+      .example-repeat-move-setup { }
+      .example-repeat-move-setup.example-repeat-move-start { }
+    </file>
+    <file name="scenario.js">
+       it('should render initial data set', function() {
+         var r = using('.doc-example-live').repeater('ul li');
+         expect(r.count()).toBe(10);
+         expect(r.row(0)).toEqual(["1","John","25"]);
+         expect(r.row(1)).toEqual(["2","Jessie","30"]);
+         expect(r.row(9)).toEqual(["10","Samantha","60"]);
+         expect(binding('friends.length')).toBe("10");
+       });
+
+       it('should update repeater when filter predicate changes', function() {
+         var r = using('.doc-example-live').repeater('ul li');
+         expect(r.count()).toBe(10);
+
+         input('q').enter('ma');
+
+         expect(r.count()).toBe(2);
+         expect(r.row(0)).toEqual(["1","Mary","28"]);
+         expect(r.row(1)).toEqual(["2","Samantha","60"]);
+       });
+      </file>
+    </example>
  */
 var ngRepeatDirective = ['$parse', '$animator', function($parse, $animator) {
   var NG_REMOVED = '$$NG_REMOVED';
@@ -14728,7 +14827,7 @@ var ngRepeatDirective = ['$parse', '$animator', function($parse, $animator) {
             return hashKey(value);
           }
         }
-        
+
         match = lhs.match(/^(?:([\$\w]+)|\(([\$\w]+)\s*,\s*([\$\w]+)\))$/);
         if (!match) {
           throw Error("'item' in 'item in collection' should be identifier or (key, value) but got '" +
@@ -14886,13 +14985,68 @@ var ngRepeatDirective = ['$parse', '$animator', function($parse, $animator) {
  *     then the element is shown or hidden respectively.
  *
  * @example
-   <doc:example>
-     <doc:source>
-        Click me: <input type="checkbox" ng-model="checked"><br/>
-        Show: <span ng-show="checked">I show up when your checkbox is checked.</span> <br/>
-        Hide: <span ng-hide="checked">I hide when your checkbox is checked.</span>
-     </doc:source>
-     <doc:scenario>
+  <example animations="true">
+    <file name="index.html">
+      Click me: <input type="checkbox" ng-model="checked"><br/>
+      <div>
+        Show:
+        <span class="check-element"
+              ng-show="checked"
+              ng-animate="{show: 'example-show', hide: 'example-hide'}">
+          <span class="icon-thumbs-up"></span> I show up when your checkbox is checked.
+        </span>
+      </div>
+      <div>
+        Hide:
+        <span class="check-element"
+              ng-hide="checked"
+              ng-animate="{show: 'example-show', hide: 'example-hide'}">
+          <span class="icon-thumbs-down"></span> I hide when your checkbox is checked.
+        </span>
+      </div>
+    </file>
+    <file name="animations.css">
+      .example-show-setup, .example-hide-setup {
+        -webkit-transition:all linear 0.5s;
+        -moz-transition:all linear 0.5s;
+        -ms-transition:all linear 0.5s;
+        -o-transition:all linear 0.5s;
+        transition:all linear 0.5s;
+      }
+
+      .example-show-setup {
+        line-height:0;
+        opacity:0;
+        padding:0 10px;
+      }
+      .example-show-start.example-show-start {
+        line-height:20px;
+        opacity:1;
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+
+      .example-hide-setup {
+        line-height:20px;
+        opacity:1;
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+      .example-hide-start.example-hide-start {
+        line-height:0;
+        opacity:0;
+        padding:0 10px;
+      }
+
+      .check-element {
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+    </file>
+    <file name="scenario.js">
        it('should check ng-show / ng-hide', function() {
          expect(element('.doc-example-live span:first:hidden').count()).toEqual(1);
          expect(element('.doc-example-live span:last:visible').count()).toEqual(1);
@@ -14902,8 +15056,8 @@ var ngRepeatDirective = ['$parse', '$animator', function($parse, $animator) {
          expect(element('.doc-example-live span:first:visible').count()).toEqual(1);
          expect(element('.doc-example-live span:last:hidden').count()).toEqual(1);
        });
-     </doc:scenario>
-   </doc:example>
+    </file>
+  </example>
  */
 //TODO(misko): refactor to remove element from the DOM
 var ngShowDirective = ['$animator', function($animator) {
@@ -14940,24 +15094,79 @@ var ngShowDirective = ['$animator', function($animator) {
  *     the element is shown or hidden respectively.
  *
  * @example
-   <doc:example>
-     <doc:source>
-        Click me: <input type="checkbox" ng-model="checked"><br/>
-        Show: <span ng-show="checked">I show up when you checkbox is checked?</span> <br/>
-        Hide: <span ng-hide="checked">I hide when you checkbox is checked?</span>
-     </doc:source>
-     <doc:scenario>
+  <example animations="true">
+    <file name="index.html">
+      Click me: <input type="checkbox" ng-model="checked"><br/>
+      <div>
+        Show:
+        <span class="check-element"
+              ng-show="checked"
+              ng-animate="{show: 'example-show', hide: 'example-hide'}">
+          <span class="icon-thumbs-up"></span> I show up when your checkbox is checked.
+        </span>
+      </div>
+      <div>
+        Hide:
+        <span class="check-element"
+              ng-hide="checked"
+              ng-animate="{show: 'example-show', hide: 'example-hide'}">
+          <span class="icon-thumbs-down"></span> I hide when your checkbox is checked.
+        </span>
+      </div>
+    </file>
+    <file name="animations.css">
+      .example-show-setup, .example-hide-setup {
+        -webkit-transition:all linear 0.5s;
+        -moz-transition:all linear 0.5s;
+        -ms-transition:all linear 0.5s;
+        -o-transition:all linear 0.5s;
+        transition:all linear 0.5s;
+      }
+
+      .example-show-setup {
+        line-height:0;
+        opacity:0;
+        padding:0 10px;
+      }
+      .example-show-start.example-show-start {
+        line-height:20px;
+        opacity:1;
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+
+      .example-hide-setup {
+        line-height:20px;
+        opacity:1;
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+      .example-hide-start.example-hide-start {
+        line-height:0;
+        opacity:0;
+        padding:0 10px;
+      }
+
+      .check-element {
+        padding:10px;
+        border:1px solid black;
+        background:white;
+      }
+    </file>
+    <file name="scenario.js">
        it('should check ng-show / ng-hide', function() {
-         expect(element('.doc-example-live span:first:hidden').count()).toEqual(1);
-         expect(element('.doc-example-live span:last:visible').count()).toEqual(1);
+         expect(element('.doc-example-live .check-element:first:hidden').count()).toEqual(1);
+         expect(element('.doc-example-live .check-element:last:visible').count()).toEqual(1);
 
          input('checked').check();
 
-         expect(element('.doc-example-live span:first:visible').count()).toEqual(1);
-         expect(element('.doc-example-live span:last:hidden').count()).toEqual(1);
+         expect(element('.doc-example-live .check-element:first:visible').count()).toEqual(1);
+         expect(element('.doc-example-live .check-element:last:hidden').count()).toEqual(1);
        });
-     </doc:scenario>
-   </doc:example>
+    </file>
+  </example>
  */
 //TODO(misko): refactor to remove element from the DOM
 var ngHideDirective = ['$animator', function($animator) {
@@ -15062,40 +15271,77 @@ var ngStyleDirective = ngDirective(function(scope, element, attr) {
  *
  *
  * @example
-    <doc:example>
-      <doc:source>
-        <script>
-          function Ctrl($scope) {
-            $scope.items = ['settings', 'home', 'other'];
-            $scope.selection = $scope.items[0];
-          }
-        </script>
-        <div ng-controller="Ctrl">
-          <select ng-model="selection" ng-options="item for item in items">
-          </select>
-          <tt>selection={{selection}}</tt>
-          <hr/>
-          <div ng-switch on="selection" >
+  <example animations="true">
+    <file name="index.html">
+      <div ng-controller="Ctrl">
+        <select ng-model="selection" ng-options="item for item in items">
+        </select>
+        <tt>selection={{selection}}</tt>
+        <hr/>
+        <div
+          class="example-animate-container"
+          ng-switch on="selection"
+          ng-animate="{enter: 'example-enter', leave: 'example-leave'}">
             <div ng-switch-when="settings">Settings Div</div>
-            <span ng-switch-when="home">Home Span</span>
-            <span ng-switch-default>default</span>
-          </div>
+            <div ng-switch-when="home">Home Span</div>
+            <div ng-switch-default>default</div>
         </div>
-      </doc:source>
-      <doc:scenario>
-        it('should start in settings', function() {
-         expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Settings Div/);
-        });
-        it('should change to home', function() {
-         select('selection').option('home');
-         expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Home Span/);
-        });
-        it('should select default', function() {
-         select('selection').option('other');
-         expect(element('.doc-example-live [ng-switch]').text()).toMatch(/default/);
-        });
-      </doc:scenario>
-    </doc:example>
+      </div>
+    </file>
+    <file name="script.js">
+      function Ctrl($scope) {
+        $scope.items = ['settings', 'home', 'other'];
+        $scope.selection = $scope.items[0];
+      }
+    </file>
+    <file name="animations.css">
+      .example-leave-setup, .example-enter-setup {
+        -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+        transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+      }
+
+      .example-animate-container > * {
+        display:block;
+        padding:10px;
+      }
+
+      .example-enter-setup {
+        top:-50px;
+      }
+      .example-enter-start.example-enter-start {
+        top:0;
+      }
+
+      .example-leave-setup {
+        top:0;
+      }
+      .example-leave-start.example-leave-start {
+        top:50px;
+      }
+    </file>
+    <file name="scenario.js">
+      it('should start in settings', function() {
+        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Settings Div/);
+      });
+      it('should change to home', function() {
+        select('selection').option('home');
+        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/Home Span/);
+      });
+      it('should select default', function() {
+        select('selection').option('other');
+        expect(element('.doc-example-live [ng-switch]').text()).toMatch(/default/);
+      });
+    </file>
+  </example>
  */
 var ngSwitchDirective = ['$animator', function($animator) {
   return {
@@ -15242,7 +15488,7 @@ var ngTranscludeDirective = ngDirective({
  *
  * @scope
  * @example
-    <example module="ngView">
+    <example module="ngView" animations="true">
       <file name="index.html">
         <div ng-controller="MainCntl">
           Choose:
@@ -15252,7 +15498,10 @@ var ngTranscludeDirective = ngDirective({
           <a href="Book/Gatsby/ch/4?key=value">Gatsby: Ch4</a> |
           <a href="Book/Scarlet">Scarlet Letter</a><br/>
 
-          <div ng-view></div>
+          <div
+            ng-view
+            class="example-animate-container"
+            ng-animate="{enter: 'example-enter', leave: 'example-leave'}"></div>
           <hr />
 
           <pre>$location.path() = {{$location.path()}}</pre>
@@ -15264,14 +15513,58 @@ var ngTranscludeDirective = ngDirective({
       </file>
 
       <file name="book.html">
-        controller: {{name}}<br />
-        Book Id: {{params.bookId}}<br />
+        <div>
+          controller: {{name}}<br />
+          Book Id: {{params.bookId}}<br />
+        </div>
       </file>
 
       <file name="chapter.html">
-        controller: {{name}}<br />
-        Book Id: {{params.bookId}}<br />
-        Chapter Id: {{params.chapterId}}
+        <div>
+          controller: {{name}}<br />
+          Book Id: {{params.bookId}}<br />
+          Chapter Id: {{params.chapterId}}
+        </div>
+      </file>
+
+      <file name="animations.css">
+        .example-leave-setup, .example-enter-setup {
+          -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+          -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+          -ms-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+          -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+          transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
+        }
+
+        .example-animate-container {
+          position:relative;
+          height:100px;
+        }
+
+        .example-animate-container > * {
+          display:block;
+          width:100%;
+          border-left:1px solid black;
+
+          position:absolute;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
+          padding:10px;
+        }
+
+        .example-enter-setup {
+          left:100%;
+        }
+        .example-enter-setup.example-enter-start {
+          left:0;
+        }
+
+        .example-leave-setup { }
+        .example-leave-setup.example-leave-start {
+          left:-100%;
+        }
       </file>
 
       <file name="script.js">
