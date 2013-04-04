@@ -1,20 +1,24 @@
 angular.module('App', [])
 
-  .controller('AppCtrl', function($rootScope) {
+  .controller('AppCtrl', function($rootScope, appLoading) {
     $rootScope.topScope = $rootScope;
+    $rootScope.$on('$routeChangeStart', function() {
+      appLoading.loading();
+    });
   })
 
-  .controller('AppHomeCtrl', function($scope) {
-
+  .controller('AppHomeCtrl', function($scope, appLoading) {
+    appLoading.ready();
   })
 
-  .controller('AppRepeatCtrl', function($scope, appTweets, $filter) {
+  .controller('AppRepeatCtrl', function($scope, appTweets, $filter, appLoading) {
     $scope.tweets = [];
     var cache = [], filter = $filter('filter');
     $scope.filter = function(q) {
       $scope.tweets = filter(cache, q);
     };
     $scope.search = function(q) {
+      appLoading.loading();
       $scope.s = q;
       if(q == false) {
         $scope.tweets = [];
@@ -22,13 +26,14 @@ angular.module('App', [])
       else {
         appTweets(q, function(data) {
           cache = $scope.tweets = data;
+          appLoading.ready();
         });
       }
     };
     $scope.search('angularjs');
   })
 
-  .controller('AppShowHideCtrl', function($scope) {
+  .controller('AppShowHideCtrl', function($scope, appLoading) {
     function makeCell(number, type) {
       return { number: number, type: type};
     };
@@ -88,14 +93,16 @@ angular.module('App', [])
     $scope.search = function(q) {
       $scope.q = q;
     };
+
+    appLoading.ready();
   })
 
-  .controller('AppSwitchCtrl', function($scope) {
-
+  .controller('AppSwitchCtrl', function($scope, appLoading) {
+    appLoading.ready();
   })
 
-  .controller('AppIncludeCtrl', function($scope) {
-
+  .controller('AppIncludeCtrl', function($scope, appLoading) {
+    appLoading.ready();
   })
 
   .config(function($routeProvider) {
@@ -111,6 +118,32 @@ angular.module('App', [])
     }).otherwise({
       redirectTo: '/ng-repeat'
     });
+  })
+
+  .factory('appLoading', function($rootScope) {
+    var timer;
+    return {
+      loading : function() {
+        clearTimeout(timer);
+        $rootScope.status = 'loading';
+        if(!$rootScope.$$phase) $rootScope.$apply();
+      },
+      ready : function(delay) {
+        function ready() {
+          $rootScope.status = 'ready';
+          if(!$rootScope.$$phase) $rootScope.$apply();
+        }
+
+        clearTimeout(timer);
+        delay = delay == null ? 500 : false;
+        if(delay) {
+          timer = setTimeout(ready, delay);
+        }
+        else {
+          ready();
+        }
+      }
+    };
   })
 
   .factory('appTweets', function($rootScope, $http, $q) {

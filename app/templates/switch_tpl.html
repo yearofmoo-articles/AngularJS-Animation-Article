@@ -1,29 +1,29 @@
-<div ng-init="slide='one'; wave='one'">
+<div data-ng-init="slide='one'; wave='one'">
   <h2>
     ngSwitch / ngInclude Animations
-    <div class="pull-right" ng-include="'./templates/actions_tpl.html'"></div>
+    <div class="pull-right" data-ng-include="'./templates/actions_tpl.html'"></div>
   </h2>
 
-  <div ng-hide="hidden" ng-animate="{show: 'fade-show', hide: 'fade-hide'}">
-    <button class="btn btn-primary" ng-click="wave='one'">Slide 1: Why AngularJS?</button>
-    <button class="btn btn-danger" ng-click="wave='two'">Slide 2: Alternatives</button>
-    <button class="btn btn" ng-click="wave='three'">Slide 3: Extensibility</button>
-    <div ng-switch="wave" ng-animate="{enter: 'wave-enter', leave: 'wave-leave'}" class="slide-frame">
-      <div ng-switch-when="one">
+  <div data-ng-hide="hidden" data-ng-animate="'fade'">
+    <button class="btn btn-primary" data-ng-click="wave='one'">Slide 1: Why AngularJS?</button>
+    <button class="btn btn-danger" data-ng-click="wave='two'">Slide 2: Alternatives</button>
+    <button class="btn btn" data-ng-click="wave='three'">Slide 3: Extensibility</button>
+    <div data-ng-switch="wave" data-ng-animate="'wave'" class="slide-frame">
+      <div data-ng-switch-when="one">
         <h1>Why AngularJS?</h1>
 
         <p>
           HTML is great for declaring static documents, but it falters when we try to use it for declaring dynamic views in web-applications. AngularJS lets you extend HTML vocabulary for your application. The resulting environment is extraordinarily expressive, readable, and quick to develop.
         </p>
       </div>
-      <div ng-switch-when="two">
+      <div data-ng-switch-when="two">
         <h1>Alternatives</h1>
 
         <p>
           Other frameworks deal with HTML’s shortcomings by either abstracting away HTML, CSS, and/or JavaScript or by providing an imperative way for manipulating the DOM. Neither of these address the root problem that HTML was not designed for dynamic views.
         </p>
       </div>
-      <div ng-switch-when="three">
+      <div data-ng-switch-when="three">
         <h1>Extensibility</h1>
 
         <p>
@@ -32,25 +32,25 @@
       </div>
     </div>
 
-    <button class="btn btn-primary" ng-click="slide='one'">Slide 4: Data Binding</button>
-    <button class="btn btn-danger" ng-click="slide='two'">Slide 5: Controller</button>
-    <button class="btn btn" ng-click="slide='three'">Slide 6: Plain JavaScript</button>
-    <div ng-switch="slide" ng-animate="{enter: 'slide-enter', leave: 'slide-leave'}" class="slide-frame">
-      <div ng-switch-when="one">
+    <button class="btn btn-primary" data-ng-click="slide='one'">Slide 4: Data Binding</button>
+    <button class="btn btn-danger" data-ng-click="slide='two'">Slide 5: Controller</button>
+    <button class="btn btn" data-ng-click="slide='three'">Slide 6: Plain JavaScript</button>
+    <div data-ng-switch="slide" data-ng-animate="'slide'" class="slide-frame">
+      <div data-ng-switch-when="one">
         <h1>Data Binding</h1>
 
         <p>
 Data-binding is an automatic way of updating the view whenever the model changes, as well as updating the model whenever the view changes. This is awesome because it eliminates DOM manipulation from the list of things you have to worry about.
         </p>
       </div>
-      <div ng-switch-when="two">
+      <div data-ng-switch-when="two">
         <h1>Controller</h1>
 
         <p>
 Controllers are the behavior behind the DOM elements. AngularJS lets you express the behavior in a clean readable form without the usual boilerplate of updating the DOM, registering callbacks or watching model changes.
         </p>
       </div>
-      <div ng-switch-when="three">
+      <div data-ng-switch-when="three">
         <h1>Plain JavaScript</h1>
 
         <p>
