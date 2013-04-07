@@ -26,9 +26,9 @@ angular.module('App', [])
       else {
         appTweets(q, function(data) {
           cache = $scope.tweets = data;
-          appLoading.ready();
         });
       }
+      appLoading.ready();
     };
     $scope.search('angularjs');
   })
